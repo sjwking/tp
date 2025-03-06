@@ -1,8 +1,6 @@
 package seedu.duke;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class FinTrack {
 
@@ -76,3 +74,48 @@ public class FinTrack {
         }
     }
 }
+
+class Expense {
+    int amount;
+    String category;
+    String description;
+    Date date;
+
+    Expense(int amount, String category, String description, Date date) {
+        this.amount = amount;
+        this.category = category;
+        this.description = description;
+        this.date = date;
+    }
+
+    void printExpense() {
+        System.out.println("Amount: " + amount);
+        System.out.println("Category: " + category);
+        System.out.println("Description: " + description);
+        System.out.println("Date: " + date);
+    }
+}
+
+class ExpenseList {
+    ArrayList<Expense> expenseList;
+
+    ExpenseList() {
+        ArrayList<Expense> expenseList = new ArrayList<>();
+    }
+
+    void addExpense(int amount, String category, String description, Date date){
+        expenseList.add(new Expense(amount, category, description, date));
+    }
+
+    void removeExpense(int index){
+        expenseList.remove(index);
+    }
+
+    void printList(){
+        for(Expense expense : expenseList){
+            expense.printExpense();
+        }
+    }
+}
+
+
