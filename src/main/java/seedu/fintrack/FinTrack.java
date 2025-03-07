@@ -1,6 +1,10 @@
 package seedu.fintrack;
 
-import java.util.*;
+import java.util.Date;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Scanner;
+import java.util.ArrayList;
 
 public class FinTrack {
 
@@ -103,16 +107,16 @@ class ExpenseList {
         ArrayList<Expense> expenseList = new ArrayList<>();
     }
 
-    void addExpense(int amount, String category, String description, Date date){
+    void addExpense(int amount, String category, String description, Date date) {
         expenseList.add(new Expense(amount, category, description, date));
     }
 
-    void removeExpense(int index){
+    void removeExpense(int index) {
         expenseList.remove(index);
     }
 
-    void printList(){
-        for(Expense expense : expenseList){
+    void printList() {
+        for (Expense expense : expenseList) {
             expense.printExpense();
         }
     }
