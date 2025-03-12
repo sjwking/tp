@@ -1,39 +1,9 @@
-Hello I am
- ____        _
-|  _ \ _   _| | _____
+Hello from
+ ____        _        
+|  _ \ _   _| | _____ 
 | | | | | | | |/ / _ \
 | |_| | |_| |   <  __/
 |____/ \__,_|_|\_\___|
 
 What is your name?
-Welcome John! Welcome to FinTrack!
-Select an option:
-1: Add Expense
-2: Check History
-3: Check Budget
-4: Exit
-Adding expense...
-Select an option:
-1: Add Expense
-2: Check History
-3: Check Budget
-4: Exit
-Checking history...
-Select an option:
-1: Add Expense
-2: Check History
-3: Check Budget
-4: Exit
-Checking budget...
-Select an option:
-1: Add Expense
-2: Check History
-3: Check Budget
-4: Exit
-Unknown command: invalid
-Select an option:
-1: Add Expense
-2: Check History
-3: Check Budget
-4: Exit
-Exiting...
+Hello James Gosling
