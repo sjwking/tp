@@ -1,4 +1,4 @@
-package seedu.fintrack;
+package seedu.duke;
 
 import java.util.*;
 
