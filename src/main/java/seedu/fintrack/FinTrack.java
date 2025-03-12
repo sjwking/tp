@@ -32,6 +32,7 @@ public class FinTrack {
         Ui.printOptions();
 
         String input = sc.nextLine();
+        ExpenseList expenseList = new ExpenseList();
 
         while (input != null) {
             switch (input) {
