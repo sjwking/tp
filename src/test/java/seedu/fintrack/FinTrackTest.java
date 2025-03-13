@@ -10,3 +10,4 @@ class FinTrackTest {
         assertTrue(true);
     }
 }
+
