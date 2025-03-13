@@ -33,22 +33,11 @@ public class FinTrack {
 
         String input = sc.nextLine();
         ExpenseList expenseList = new ExpenseList();
+        Commands commands = new Commands();
 
         while (input != null) {
-            switch (input) {
-            case "1":
-                break;
-            case "2":
-                break;
-            case "3":
-                break;
-            case "4":
-                System.exit(0);
-                break;
-            default:
-                System.out.println("Please enter a valid input");
-                input = sc.nextLine();
-            }
+            commands.fetchCommand(input);
+            input = sc.nextLine();
         }
     }
 }
