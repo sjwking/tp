@@ -61,3 +61,4 @@ class FinTrackTest {
         assertTrue(outputStream.toString().contains("Hello, I am Fin!"));
     }
 }
+

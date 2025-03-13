@@ -13,4 +13,22 @@ public class Expense {
         this.description = description;
         this.date = date;
     }
+
+    // Getters
+    public int getAmount() {
+        return amount;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Date getDate() {
+        return date;
+    }
 }
+
