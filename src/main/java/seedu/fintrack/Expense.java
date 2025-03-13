@@ -7,7 +7,7 @@ public class Expense {
     private String description;
     private Date date;
 
-    Expense(int amount, String category, String description, Date date) {
+    public Expense(int amount, String category, String description, Date date) {
         this.amount = amount;
         this.category = category;
         this.description = description;

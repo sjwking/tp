@@ -9,3 +9,6 @@ Select one of the options:
 4. Exit the program
 ________________________________________________________________________________
 
+Adding expense
+Month
+History
