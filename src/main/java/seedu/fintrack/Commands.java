@@ -7,9 +7,10 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class Commands {
-    private static ExpenseList expenseList;
     public static Scanner sc;
-    private static HashMap<String, Runnable> commands = new HashMap<>();
+    private static ExpenseList expenseList;
+    private static final HashMap<String, Runnable> commands = new HashMap<>();
+
 
     public Commands(ExpenseList expenseList, Scanner sc) {
         this.expenseList = expenseList;
@@ -54,7 +55,8 @@ public class Commands {
         for (int i = 0; i < expenseList.size(); i++) {
             Expense expense = expenseList.getExpense(i);
             if (monthFormat.format(expense.getDate()).equals(currentMonth)) {
-                System.out.println(i + ": " + expense.getDescription() + " - " + expense.getAmount() + " cents");
+                System.out.println(i + ": " + expense.getDescription() +
+                        " - " + expense.getAmount() + " cents");
             }
         }
     }
@@ -63,7 +65,8 @@ public class Commands {
         System.out.println("Spending history:");
         for (int i = 0; i < expenseList.size(); i++) {
             Expense expense = expenseList.getExpense(i);
-            System.out.println(i + ": " + expense.getDescription() + " - " + expense.getAmount() + " cents on " + expense.getDate());
+            System.out.println(i + ": " + expense.getDescription() +
+                    " - " + expense.getAmount() + " cents on " + expense.getDate());
         }
     }
 
