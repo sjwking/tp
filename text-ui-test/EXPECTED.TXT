@@ -4,11 +4,13 @@ How can I help you today?
 ________________________________________________________________________________
 Select one of the options:
 1. Add an expense
-2. View this months details
+2. View this month's details
 3. View spending history
-4. Exit the program
+4. Update an expense
+5. Delete an expense
+6. Exit the program
 ________________________________________________________________________________
 
-Adding expense
-Month
-History
+Enter expense amount (in cents):
+Enter expense category:
+Enter expense description:
