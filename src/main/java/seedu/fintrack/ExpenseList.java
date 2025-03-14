@@ -19,4 +19,12 @@ public class ExpenseList {
     Expense getExpense(int index) {
         return expenseList.get(index);
     }
+
+    public int size() {
+        return expenseList.size();
+    }
+
+    public void updateExpense(int index, Expense expense) {
+        expenseList.set(index, expense);
+    }
 }

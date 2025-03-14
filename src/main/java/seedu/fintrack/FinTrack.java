@@ -33,7 +33,7 @@ public class FinTrack {
 
         String input = sc.nextLine();
         ExpenseList expenseList = new ExpenseList();
-        Commands commands = new Commands();
+        Commands commands = new Commands(expenseList, sc);
 
         while (input != null) {
             commands.fetchCommand(input);

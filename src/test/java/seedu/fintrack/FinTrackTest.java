@@ -2,9 +2,11 @@ package seedu.fintrack;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Date;
+import java.util.Scanner;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -16,8 +18,11 @@ class FinTrackTest {
 
     @BeforeEach
     void setUp() {
-        commands = new Commands();
         expenseList = new ExpenseList();
+        // Simulated input for addExpense: amount, category, description, date.
+        String simulatedInput = "1000\nFood\nLunch\n2025-03-14\n";
+        Scanner scanner = new Scanner(new ByteArrayInputStream(simulatedInput.getBytes()));
+        commands = new Commands(expenseList, scanner);
         outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream)); // Redirects output for testing
     }
@@ -25,16 +30,22 @@ class FinTrackTest {
     /*** Commands Tests ***/
 
     @Test
-    void fetchCommand_validCommand1_printsAddExpense() {
+    void fetchCommand_validCommand1_addsExpense() {
+        // When command "1" is fetched, addExpense() will prompt and eventually add an expense.
         commands.fetchCommand("1");
-        assertEquals("Adding expense", outputStream.toString().trim()); // Use trim() to remove extra spaces/newlines
+        // Verify the expense was added.
+        assertEquals(1, expenseList.size());
+        // Check that the output contains the confirmation message.
+        assertTrue(outputStream.toString().contains("Expense added."));
     }
 
-    /*@Test
+    @Test
     void fetchCommand_invalidCommand_doesNothing() {
-        commands.fetchCommand("99"); // Invalid command
-        assertEquals("", outputStream.toString()); // No output expected
-    }*/
+        // Test an invalid command.
+        commands.fetchCommand("99"); // Invalid command should trigger error message.
+        // Check that the output indicates an invalid command.
+        assertTrue(outputStream.toString().contains("Invalid command."));
+    }
 
     /*** ExpenseList Tests ***/
 
@@ -53,6 +64,7 @@ class FinTrackTest {
         assertThrows(IndexOutOfBoundsException.class, () -> expenseList.getExpense(0));
     }
 
+
     /*** Ui Tests ***/
 
     @Test
@@ -61,4 +73,3 @@ class FinTrackTest {
         assertTrue(outputStream.toString().contains("Hello, I am Fin!"));
     }
 }
-
