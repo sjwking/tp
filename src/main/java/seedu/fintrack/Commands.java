@@ -9,18 +9,21 @@ import java.util.Scanner;
 public class Commands {
     public static Scanner sc;
     private static ExpenseList expenseList;
+    private static CategoryList categoryList;
     private static final HashMap<String, Runnable> commands = new HashMap<>();
 
 
-    public Commands(ExpenseList expenseList, Scanner sc) {
+    public Commands(ExpenseList expenseList, CategoryList categoryList, Scanner sc) {
         this.expenseList = expenseList;
+        this.categoryList = categoryList;
         this.sc = sc;
         commands.put("1", () -> addExpense());
         commands.put("2", () -> viewMonth());
         commands.put("3", () -> viewHistory());
         commands.put("4", () -> updateExpense());
         commands.put("5", () -> deleteExpense(0));
-        commands.put("6", () -> exit());
+        commands.put("6", () -> deleteCategory());
+        commands.put("7", () -> exit());
     }
 
     public void fetchCommand(String input) {
@@ -36,7 +39,8 @@ public class Commands {
         System.out.println("Enter expense amount (in cents):");
         int amount = Integer.parseInt(sc.nextLine());
         System.out.println("Enter expense category:");
-        String category = sc.nextLine();
+        categoryList.printCategories();
+        String category = categoryList.processCategory();
         System.out.println("Enter expense description:");
         String description = sc.nextLine();
         System.out.println("Enter expense date (format yyyy-MM-dd):");
@@ -66,7 +70,7 @@ public class Commands {
         for (int i = 0; i < expenseList.size(); i++) {
             Expense expense = expenseList.getExpense(i);
             System.out.println(i + ": " + expense.getDescription() +
-                    " - " + expense.getAmount() + " cents on " + expense.getDate());
+                    " - " + expense.getAmount() + " cents on " + expense.getDate() + " (" + expense.getCategory() + ")");
         }
     }
 
@@ -80,7 +84,8 @@ public class Commands {
         System.out.println("Enter new expense amount (in cents):");
         int amount = Integer.parseInt(sc.nextLine());
         System.out.println("Enter new expense category:");
-        String category = sc.nextLine();
+        categoryList.printCategories();
+        String category = categoryList.processCategory();
         System.out.println("Enter new expense description:");
         String description = sc.nextLine();
         System.out.println("Enter new expense date (format yyyy-MM-dd):");
@@ -101,6 +106,18 @@ public class Commands {
         Expense expense = expenseList.getExpense(index);
         expenseList.deleteExpense(expense);
         System.out.println("Expense deleted.");
+    }
+
+    public void deleteCategory() {
+        System.out.println("Enter the index of the category to delete:");
+        categoryList.printCustomCategories();
+        int index = Integer.parseInt(sc.nextLine());
+        int numberOfDefaultCategories = 5;
+        if (index <= 0 || index >= categoryList.getCategoryCount() - numberOfDefaultCategories) {
+            System.out.println("Please enter a valid index.");
+            return;
+        }
+        categoryList.removeCategory(index);
     }
 
     private void exit() {
