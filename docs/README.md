@@ -1,4 +1,4 @@
-# Duke
+# FinTrack
 
 {Give product intro here}
 
