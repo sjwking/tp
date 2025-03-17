@@ -49,9 +49,26 @@ public class Commands {
                 Ui.printOptions();
             }
         });
-        commands.put("6", () -> exit());
+        commands.put("6", () -> {
+            try {
+                setMonthlyBudget();
+            } catch (FinTrackException e) {
+                System.out.println("Error: " + e.getMessage());
+                Ui.printOptions();
+            }
+        });
+        commands.put("7", () -> {
+            try {
+                addRecurringExpense();
+            } catch (FinTrackException e) {
+                System.out.println("Error: " + e.getMessage());
+                Ui.printOptions();
+            }
+        });
 
-        assert commands.size() == 6 : "Commands map should contain 6 commands";
+        commands.put("8", () -> exit());
+
+        assert commands.size() == 8 : "Commands map should contain 8 commands";
     }
 
     public void fetchCommand(String input) {
@@ -79,6 +96,9 @@ public class Commands {
         Expense expense = new Expense(amount, category, description, date);
         int sizeBefore = expenseList.size();
         expenseList.addExpense(expense);
+        if (expenseList.getMonthlyBudget() > 0) {
+            System.out.println("Your remaining budget for the month is: " + expenseList.getRemainingBudget());
+        }
         assert expenseList.size() == sizeBefore + 1 : "Expense list did not increment as expected";
         System.out.println("Expense added.");
     }
@@ -180,4 +200,38 @@ public class Commands {
             throw new FinTrackException("Invalid date format. Expected yyyy-MM-dd, got: " + dateStr);
         }
     }
+
+    private void setMonthlyBudget() throws FinTrackException {
+        int budget = readInt("Enter monthly budget:");
+        if (budget < 0) {
+            throw new FinTrackException("Budget must be non-negative");
+        }
+        expenseList.setMonthlyBudget(budget);
+        System.out.println("Monthly budget set to: " + budget);
+    }
+
+
+    private void addRecurringExpense() throws FinTrackException {
+        int amount = readInt("Enter expense amount (in cents): ");
+        if (amount < 0) {
+            throw new FinTrackException("Expense amount must be non-negative.");
+        }
+        System.out.println("Enter expense category:");
+        String category = sc.nextLine();
+        System.out.println("Enter frequency (Weekly, Monthly, Yearly):");
+        String frequency = sc.nextLine();
+        if (!frequency.equalsIgnoreCase("Weekly") && !frequency.equalsIgnoreCase("Monthly")
+                && !frequency.equalsIgnoreCase("Yearly")) {
+            throw new FinTrackException("Invalid frequency. Must be Weekly, Monthly, or Yearly.");
+        }
+        System.out.println("Enter expense description:");
+        String description = sc.nextLine();
+        Date startDate = readDate("Enter start date (format yyyy-MM-dd):");
+
+
+        RecurringExpense recurringExpense = new RecurringExpense(amount, category, frequency, description, startDate);
+        expenseList.addRecurringExpense(recurringExpense);
+        System.out.println("Recurring expense added.");
+    }
+
 }
