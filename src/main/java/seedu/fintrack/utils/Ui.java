@@ -1,4 +1,4 @@
-package seedu.fintrack;
+package seedu.fintrack.utils;
 
 public class Ui{
     private static String border = "________________________________________________________________________________\n";
