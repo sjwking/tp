@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Commands {
@@ -90,7 +91,7 @@ public class Commands {
         System.out.println("Enter expense category:");
         String category = sc.nextLine();
         System.out.println("Enter expense description:");
-        String description = sc.nextLine();
+        String description = sc.nextLine(); // Default description
         Date date = readDate("Enter expense date (format yyyy-MM-dd):");
 
         Expense expense = new Expense(amount, category, description, date);
@@ -171,6 +172,7 @@ public class Commands {
         while (true) {
             System.out.println(prompt);
             String input = sc.nextLine();
+
             try {
                 return Integer.parseInt(input);
             } catch (NumberFormatException e) {
@@ -184,11 +186,14 @@ public class Commands {
         while (true) {
             System.out.println(prompt);
             String input = sc.nextLine();
+
             try {
                 return parseDate(input);
             } catch (FinTrackException e) {
                 System.out.println(e.getMessage());
                 // Continue looping until a valid date is provided.
+            } catch (NoSuchElementException e) {
+                System.out.println();
             }
         }
     }
@@ -226,10 +231,11 @@ public class Commands {
         }
         System.out.println("Enter expense description:");
         String description = sc.nextLine();
+        Date date = readDate("Enter current date (format yyyy-MM-dd):");
         Date startDate = readDate("Enter start date (format yyyy-MM-dd):");
 
 
-        RecurringExpense recurringExpense = new RecurringExpense(amount, category, frequency, description, startDate);
+        RecurringExpense recurringExpense = new RecurringExpense(amount, category, frequency, description, startDate, startDate);
         expenseList.addRecurringExpense(recurringExpense);
         System.out.println("Recurring expense added.");
     }

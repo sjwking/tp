@@ -8,8 +8,9 @@ public class RecurringExpense extends Expense{
     private Date startDate;
 
 
-    public RecurringExpense(int amount, String category, String frequency, String description, Date startDate) {
-        super(amount, category, description, startDate);
+    public RecurringExpense(int amount, String category, String frequency, String description,
+                            Date startDate, Date date) {
+        super(amount, category, description, date);
         this.frequency = frequency;
         this.startDate = startDate;
     }

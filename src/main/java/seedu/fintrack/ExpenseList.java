@@ -87,20 +87,19 @@ public class ExpenseList {
 
 
             switch (recurringExpense.getFrequency().toLowerCase()) {
-                case "weekly":
-                    startCalendar.add(Calendar.WEEK_OF_YEAR, 1);
-                    break;
-                case "monthly":
-                    startCalendar.add(Calendar.MONTH, 1);
-                    break;
-                case "yearly":
-                    startCalendar.add(Calendar.YEAR, 1);
-                    break;
-                default:
-                    throw new IllegalArgumentException("Invalid frequency: " + recurringExpense.getFrequency());
+            case "weekly":
+                startCalendar.add(Calendar.WEEK_OF_YEAR, 1);
+                break;
+            case "monthly":
+                startCalendar.add(Calendar.MONTH, 1);
+                break;
+            case "yearly":
+                startCalendar.add(Calendar.YEAR, 1);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid frequency: " + recurringExpense.getFrequency());
             }
             numberOfOccurrences++;
         }
     }
-
 }
