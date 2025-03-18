@@ -1,5 +1,6 @@
 package seedu.fintrack;
 
+import seedu.fintrack.utils.CategoryException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -51,17 +52,28 @@ public class CategoryList {
     }
 
     public String processCategory() {
-        int categoryIndex = Integer.parseInt(scanner.nextLine());
-        if (categoryIndex > categoryList.size() || categoryIndex <= 0) {
-            throw new ArrayIndexOutOfBoundsException();
+        try {
+            if (!scanner.hasNextLine()) {
+                throw new CategoryException();
+            }
+
+            int categoryIndex = Integer.parseInt(scanner.nextLine());
+
+            if (categoryIndex > categoryList.size() || categoryIndex <= 0) {
+                throw new ArrayIndexOutOfBoundsException();
+            }
+            String category;
+            if (categoryIndex == getCategoryCount()) {
+                category = addCustomCategory();
+            } else {
+                category = getCategory(categoryIndex);
+            }
+            return category;
         }
-        String category;
-        if (categoryIndex == getCategoryCount()) {
-            category = addCustomCategory();
-        } else {
-            category = getCategory(categoryIndex);
+        catch (CategoryException error) {
+            error.printError();
         }
-        return category;
+        return null;
     }
 
     public void removeCategory(int index) {

@@ -3,6 +3,7 @@ package seedu.fintrack;
 import seedu.fintrack.utils.FinTrackException;
 import seedu.fintrack.utils.Ui;
 
+import javax.xml.catalog.CatalogException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -68,6 +69,7 @@ public class Commands {
     }
 
     public static void addExpense() throws FinTrackException {
+
         int amount = readInt("Enter expense amount (in cents):");
         if (amount < 0) {
             System.out.println("Expense amount must be non-negative.");
@@ -85,6 +87,7 @@ public class Commands {
         expenseList.addExpense(expense);
         assert expenseList.size() == sizeBefore + 1 : "Expense list did not increment as expected";
         System.out.println("Expense added.");
+
     }
 
     private void viewMonth() {
@@ -106,7 +109,8 @@ public class Commands {
         for (int i = 0; i < expenseList.size(); i++) {
             Expense expense = expenseList.getExpense(i);
             System.out.println(i + ": " + expense.getDescription() +
-                    " - " + expense.getAmount() + " cents on " + expense.getDate() + " (" + expense.getCategory() + ")");
+                    " - " + expense.getAmount() + " cents on " + expense.getDate() + " (" + expense.getCategory()
+                    + ")");
         }
     }
 
