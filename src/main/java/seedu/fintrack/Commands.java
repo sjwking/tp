@@ -235,7 +235,8 @@ public class Commands {
         Date startDate = readDate("Enter start date (format yyyy-MM-dd):");
 
 
-        RecurringExpense recurringExpense = new RecurringExpense(amount, category, frequency, description, startDate, startDate);
+        RecurringExpense recurringExpense = new RecurringExpense(amount, category,
+                frequency, description, startDate, startDate);
         expenseList.addRecurringExpense(recurringExpense);
         System.out.println("Recurring expense added.");
     }
