@@ -8,9 +8,13 @@ Select one of the options:
 3. View spending history
 4. Update an expense
 5. Delete an expense
-6. Exit the program
+6. Set a monthly budget
+7. Set recurring expense
+8. Exit the program
 ________________________________________________________________________________
 
 Enter expense amount (in cents):
 Enter expense category:
 Enter expense description:
+Enter expense date (format yyyy-MM-dd):
+Expense added.

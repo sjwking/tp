@@ -9,7 +9,10 @@ public class Ui{
             "3. View spending history\n" +
             "4. Update an expense\n" +
             "5. Delete an expense\n" +
-            "6. Exit the program\n";
+            "6. Set a monthly budget\n" +
+            "7. Set recurring expense\n" +
+            "8. Exit the program\n";
+
 
     public static void printBorder(){
         System.out.println(border);
