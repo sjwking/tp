@@ -33,11 +33,15 @@ class FinTrackTest {
 
     @Test
     void fetchCommand_validCommand1_addsExpense() {
-        // When command "1" is fetched, addExpense() will prompt and eventually add an expense.
+        String simulatedInput = "10\n50\n1\nLunch\n2025-03-18\n";  // Simulated user input
+        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+
+        // Reset the scanner to ensure it reads from the new input stream
+        commands.resetScanner();
+
         commands.fetchCommand("1");
-        // Verify the expense was added.
+
         assertEquals(1, expenseList.size());
-        // Check that the output contains the confirmation message.
         assertTrue(outputStream.toString().contains("Expense added."));
     }
 

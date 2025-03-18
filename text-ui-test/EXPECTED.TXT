@@ -10,11 +10,16 @@ Select one of the options:
 5. Delete an expense
 6. Set a monthly budget
 7. Set recurring expense
-8. Exit the program
+8. Add a new category
+9. Exit the program
 ________________________________________________________________________________
-
-Enter expense amount (in cents):
+Enter dollars:
+Enter cents:
+1. Food
+2. Transport
+3. Others
 Enter expense category:
 Enter expense description:
 Enter expense date (format yyyy-MM-dd):
 Expense added.
+Exiting program.
