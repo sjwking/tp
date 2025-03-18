@@ -67,9 +67,10 @@ public class Commands {
             }
         });
 
-        commands.put("8", () -> exit());
+        commands.put("8", () -> editCategory());
+        commands.put("9", () -> exit());
 
-        assert commands.size() == 8 : "Commands map should contain 8 commands";
+        assert commands.size() == 9 : "Commands map should contain 9 commands";
     }
 
     public void fetchCommand(String input) {
@@ -83,13 +84,25 @@ public class Commands {
     }
 
     public static void addExpense() throws FinTrackException {
-        int amount = readInt("Enter expense amount (in cents):");
-        if (amount < 0) {
-            System.out.println("Expense amount must be non-negative.");
-            return;
+        int dollars = readInt("Enter dollars:");
+
+        while(dollars <= 0) {
+            dollars = readInt("Please enter an amount above 0:");
         }
-        System.out.println("Enter expense category:");
-        String category = sc.nextLine();
+
+        int cents = readInt("Enter cents:");
+
+        while(cents <= 0 || cents >= 100) {
+            cents = readInt("Please enter an amount between 0 and 99:");
+        }
+
+        //amount computed in cents
+        int amount = dollars * 100 + cents;
+
+        Categories.printCategories();
+
+        int categoryIndex = readInt("Enter expense category:");
+        String category = Categories.getCategory(categoryIndex);
         System.out.println("Enter expense description:");
         String description = sc.nextLine(); // Default description
         Date date = readDate("Enter expense date (format yyyy-MM-dd):");
@@ -239,6 +252,19 @@ public class Commands {
                 frequency, description, startDate, startDate);
         expenseList.addRecurringExpense(recurringExpense);
         System.out.println("Recurring expense added.");
+    }
+
+    public static void resetScanner() {
+        sc = new Scanner(System.in);
+    }
+
+    public static void editCategory(){
+        System.out.println("Please the name of the new category:");
+        String newCategory = sc.nextLine();
+
+        Categories.addCategory(newCategory);
+
+        System.out.println(newCategory + " has been added to the list of categories.");
     }
 
 }

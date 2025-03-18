@@ -11,7 +11,8 @@ public class Ui{
             "5. Delete an expense\n" +
             "6. Set a monthly budget\n" +
             "7. Set recurring expense\n" +
-            "8. Exit the program\n";
+            "8. Add a new category\n" +
+            "9. Exit the program\n";
 
 
     public static void printBorder(){
