@@ -13,6 +13,7 @@ Select one of the options:
 8. Add a new category
 9. Exit the program
 ________________________________________________________________________________
+
 Enter dollars:
 Enter cents:
 1. Food
