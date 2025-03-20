@@ -18,7 +18,7 @@ public class ExpenseList {
         this.remainingBudget =  0;
     }
 
-    void addExpense(Expense expense) {
+    public void addExpense(Expense expense) {
         expenseList.add(expense);
         remainingBudget = remainingBudget - expense.getAmount();
     }
@@ -29,6 +29,10 @@ public class ExpenseList {
 
     Expense getExpense(int index) {
         return expenseList.get(index);
+    }
+
+    public ArrayList<Expense> getExpenseList() {
+        return expenseList;
     }
 
     public int size() {
