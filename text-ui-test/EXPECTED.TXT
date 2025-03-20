@@ -1,19 +1,6 @@
 ________________________________________________________________________________
 Hello, I am Fin!
 How can I help you today?
-________________________________________________________________________________
-Select one of the options:
-1. Add an expense
-2. View this month's details
-3. View spending history
-4. Update an expense
-5. Delete an expense
-6. Set a monthly budget
-7. Set recurring expense
-8. Add a new category
-9. Exit the program
-________________________________________________________________________________
-
    ?????????  ??  ???????
   ???    ??? ???  ?????????
   ???    ??  ???? ???   ???
@@ -32,6 +19,19 @@ ________________________________________________________________________________
     ???       ???    ???   ???    ??? ???    ???   ??? ?????
    ??????     ???    ???   ???    ??  ?????????    ???   ???
               ???    ???                           ?
+
+________________________________________________________________________________
+Select one of the options:
+1. Add an expense
+2. View this month's details
+3. View spending history
+4. Update an expense
+5. Delete an expense
+6. Set a monthly budget
+7. Set recurring expense
+8. Add a new category
+9. Exit the program
+________________________________________________________________________________
 
 Enter dollars:
 Enter cents:

@@ -1,6 +1,7 @@
 package seedu.fintrack;
 
 import seedu.fintrack.utils.FinTrackException;
+import seedu.fintrack.utils.Storage;
 import seedu.fintrack.utils.Ui;
 
 import java.text.ParseException;
@@ -176,6 +177,7 @@ public class Commands {
     }
 
     private void exit() {
+        Storage.saveExpensesToFile(expenseList);
         System.out.println("Exiting program.");
         System.exit(0);
     }

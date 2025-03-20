@@ -3,6 +3,25 @@ package seedu.fintrack.utils;
 public class Ui{
     private static String border = "________________________________________________________________________________\n";
     private static String greeting = "Hello, I am Fin!\n" + "How can I help you today?";
+    private static String logo =
+            "   ▄████████  ▄█  ███▄▄▄▄\n" +
+            "  ███    ███ ███  ███▀▀▀██▄\n" +
+            "  ███    █▀  ███▌ ███   ███\n" +
+            " ▄███▄▄▄     ███▌ ███   ███\n" +
+            "▀▀███▀▀▀     ███▌ ███   ███\n" +
+            "  ███        ███  ███   ███\n" +
+            "  ███        ███  ███   ███\n" +
+            "  ███        █▀    ▀█   █▀\n" +
+            "\n" +
+            "    ███        ▄████████    ▄████████  ▄████████    ▄█   ▄█▄\n" +
+            "▀█████████▄   ███    ███   ███    ███ ███    ███   ███ ▄███▀\n" +
+            "   ▀███▀▀██   ███    ███   ███    ███ ███    █▀    ███▐██▀\n" +
+            "    ███   ▀  ▄███▄▄▄▄██▀   ███    ███ ███         ▄█████▀\n" +
+            "    ███     ▀▀███▀▀▀▀▀   ▀███████████ ███        ▀▀█████▄\n" +
+            "    ███     ▀███████████   ███    ███ ███    █▄    ███▐██▄\n" +
+            "    ███       ███    ███   ███    ███ ███    ███   ███ ▀███▄\n" +
+            "   ▄████▀     ███    ███   ███    █▀  ████████▀    ███   ▀█▀\n" +
+            "              ███    ███                           ▀\n";
     private static String options = "Select one of the options:\n" +
             "1. Add an expense\n" +
             "2. View this month's details\n" +
@@ -27,5 +46,7 @@ public class Ui{
         System.out.println( border + options + border);
     }
 
-
+    public static void printLogo(){
+        System.out.println(logo);
+    }
 }
