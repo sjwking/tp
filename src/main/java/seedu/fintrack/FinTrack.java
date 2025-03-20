@@ -14,7 +14,7 @@ public class FinTrack {
 
         Scanner sc = new Scanner(System.in);
         Ui.printGreeting();
-        Ui.printLogo();
+        //Ui.printLogo();
         Ui.printOptions();
 
         String input = sc.nextLine();
