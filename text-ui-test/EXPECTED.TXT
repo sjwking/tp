@@ -17,13 +17,3 @@ ________________________________________________________________________________
 Enter command (e.g., 'add', 'viewmonth', 'history', 'update', 'delete', 'budget', 'recurring', 'category', 'exit')
 or type 'help' to see the options again :] Enter expense details in as follows:
 dollars, cents, category index, description, date (yyyy-MM-dd)
-Expense added.
-Enter command (e.g., 'add', 'viewmonth', 'history', 'update', 'delete', 'budget', 'recurring', 'category', 'exit')
-or type 'help' to see the options again :] Expenses for 03-2025:
-Enter command (e.g., 'add', 'viewmonth', 'history', 'update', 'delete', 'budget', 'recurring', 'category', 'exit')
-or type 'help' to see the options again :] Spending history:
-0: lunch - 2020 cents on Fri Dec 12 00:00:00 SGT 2025
-Enter command (e.g., 'add', 'viewmonth', 'history', 'update', 'delete', 'budget', 'recurring', 'category', 'exit')
-or type 'help' to see the options again :] Enter the index of the expense to update: Invalid number, please try again.
-Enter the index of the expense to update: Invalid number, please try again.
-Enter the index of the expense to update: Exiting program...
