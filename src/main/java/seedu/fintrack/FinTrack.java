@@ -30,15 +30,15 @@ public class FinTrack {
         boolean isRunning = true;
         //Main application loop starts, user input is read and processed
         //until the user enters the "exit" command.
-        while (isRunning) {
+        while (sc.hasNextLine() && isRunning) {
             String rawInput = parser.getCommandInput();
-            // If the user entered "exit" (or an equivalent command), terminate gracefully.
-            if (rawInput.equals("exit") || rawInput.equals("quit")) {
+            if (rawInput.equalsIgnoreCase("exit") || rawInput.equalsIgnoreCase("quit")) {
                 commands.fetchCommand("exit");
-                isRunning = false;  // Break out of the loop.
+                isRunning = false;
             } else {
                 commands.fetchCommand(rawInput);
             }
         }
+
     }
 }

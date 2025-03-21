@@ -42,16 +42,16 @@ public class Ui {
     }
 
     public static void printOptions() {
-        String options = "✨ Hey! Here's what I can help you with ✨\n" +
-                cyan + "1. 💸 Add a new expense\n" + reset +
-                green + "2. 📅 Check out this month's spending\n" + reset +
-                yellow + "3. 📈 View your spending history\n" + reset +
-                purple + "4. ✏️ Update an expense entry\n" + reset +
-                red + "5. 🗑️ Delete an expense\n" + reset +
-                blue + "6. 🎯 Set your monthly budget\n" + reset +
-                cyan + "7. 🔄 Add a recurring expense\n" + reset +
-                green + "8. 🏷️ Create a new category\n" + reset +
-                red + "9. 🚪 Exit the app\n" + reset;
+        String options = " Hey! Here's what I can help you with\n" +
+                cyan + "1.Add a new expense\n" + reset +
+                green + "2.Check out this month's spending\n" + reset +
+                yellow + "3.View your spending history\n" + reset +
+                purple + "4.Update an expense entry\n" + reset +
+                red + "5.Delete an expense\n" + reset +
+                blue + "6.Set your monthly budget\n" + reset +
+                cyan + "7.Add a recurring expense\n" + reset +
+                green + "8. Create a new category\n" + reset +
+                red + "9. Exit the app\n" + reset;
         System.out.println(border + options + border);
     }
 
