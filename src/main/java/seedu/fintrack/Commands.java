@@ -116,6 +116,7 @@ public class Commands {
         }
         assert expenseList.size() == sizeBefore + 1 : "Expense list did not increment as expected";
         System.out.println("Expense added.");
+        Storage.saveExpensesToFile(expenseList);
     }
 
     private void viewMonth() {
@@ -161,6 +162,7 @@ public class Commands {
         Expense newExpense = new Expense(amount, category, description, date);
         expenseList.updateExpense(index, newExpense);
         System.out.println("Expense updated.");
+        Storage.saveExpensesToFile(expenseList);
     }
 
     private void deleteExpense() throws FinTrackException {
@@ -174,6 +176,7 @@ public class Commands {
         expenseList.deleteExpense(expense);
         assert expenseList.size() == sizeBefore - 1 : "Expense list did not decrement as expected";
         System.out.println("Expense deleted.");
+        Storage.saveExpensesToFile(expenseList);
     }
 
     private void exit() {
