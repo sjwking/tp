@@ -3,119 +3,116 @@ package seedu.fintrack;
 import seedu.fintrack.utils.FinTrackException;
 import seedu.fintrack.utils.Storage;
 import seedu.fintrack.utils.Ui;
+import seedu.fintrack.utils.Parser;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
 
 public class Commands {
-    public static Scanner sc;
-    private static ExpenseList expenseList;
-    private static final HashMap<String, Runnable> commands = new HashMap<>();
+    private final ExpenseList expenseList;
+    private final Parser parser;
+    // Map of descriptive command keywords to their actions.
+    private final HashMap<String, Runnable> commands = new HashMap<>();
 
-    public Commands(ExpenseList expenseList, Scanner sc) {
-        // Assert that the necessary objects are provided
+    public Commands(ExpenseList expenseList, Parser parser) {
         assert expenseList != null : "Expense list should not be null";
-        assert sc != null : "Scanner should not be null";
+        assert parser != null : "Parser should not be null";
 
         this.expenseList = expenseList;
-        this.sc = sc;
+        this.parser = parser;
 
-        //Added exceptions for graceful error handling
-        commands.put("1", () -> {
+        commands.put("add", () -> {
             try {
                 addExpense();
             } catch (FinTrackException e) {
-                System.out.println("Error: " + e.getMessage());
-                Ui.printOptions();
+                Ui.showError(e.getMessage());
             }
         });
-        commands.put("2", () -> viewMonth());
-        commands.put("3", () -> viewHistory());
-        commands.put("4", () -> {
+        commands.put("viewmonth", this::viewMonth);
+        commands.put("history", this::viewHistory);
+        commands.put("update", () -> {
             try {
                 updateExpense();
             } catch (FinTrackException e) {
-                System.out.println("Error: " + e.getMessage());
-                Ui.printOptions();
+                Ui.showError(e.getMessage());
             }
         });
-        commands.put("5", () -> {
+        commands.put("delete", () -> {
             try {
                 deleteExpense();
             } catch (FinTrackException e) {
-                System.out.println("Error: " + e.getMessage());
-                Ui.printOptions();
+                Ui.showError(e.getMessage());
             }
         });
-        commands.put("6", () -> {
+        commands.put("budget", () -> {
             try {
                 setMonthlyBudget();
             } catch (FinTrackException e) {
-                System.out.println("Error: " + e.getMessage());
-                Ui.printOptions();
+                Ui.showError(e.getMessage());
             }
         });
-        commands.put("7", () -> {
+        commands.put("recurring", () -> {
             try {
                 addRecurringExpense();
             } catch (FinTrackException e) {
-                System.out.println("Error: " + e.getMessage());
-                Ui.printOptions();
+                Ui.showError(e.getMessage());
             }
         });
+        commands.put("category", this::editCategory);
+        commands.put("exit", this::exit);
 
-        commands.put("8", () -> editCategory());
-        commands.put("9", () -> exit());
 
-        assert commands.size() == 9 : "Commands map should contain 9 commands";
+        commands.put("help", () -> {
+            Ui.printOptions();
+            Ui.showMessage("\nDetailed Usage Instructions:");
+            Ui.showMessage(Ui.cyan + " - To add a new expense, type 'add' and then enter " +
+                    "the expense details in one shot, for example:\n" +
+                    " 10, 50, 1, Lunch, 2025-03-18" + Ui.reset);
+            Ui.showMessage(Ui.green + " - To view this month's expenses, type 'viewmonth'." + Ui.reset);
+            Ui.showMessage(Ui.yellow + " - To view your spending history, type 'history'." + Ui.reset);
+            Ui.showMessage(Ui.purple + " - To update an expense, type 'update' and " +
+                    "follow the prompts to enter the expense index and new details." + Ui.reset);
+            Ui.showMessage(Ui.red + " - To delete an expense, type 'delete' and " +
+                    "follow the prompt to enter the expense index." + Ui.reset);
+            Ui.showMessage(Ui.blue + " - To set your monthly budget, type 'budget' and " +
+                    "enter the budget amount." + Ui.reset);
+            Ui.showMessage(Ui.cyan + " - To add a recurring expense, type 'recurring' and " +
+                    "follow the prompts." + Ui.reset);
+            Ui.showMessage(Ui.green + " - To create a new category, type 'category' and " +
+                    "then enter the category name." + Ui.reset);
+            Ui.showMessage(Ui.red + " - To exit the application, type 'exit'." + Ui.reset);
+        });
+
+
+        assert commands.size() == 10 : "Commands map should contain 10 commands (including help)";
     }
 
-    public void fetchCommand(String input) {
-        Runnable command = commands.get(input);
+    /**
+     * Executes the command associated with the given key.
+     * If the command is invalid, an error message is shown with instructions.
+     *
+     * @param commandKey the command keyword entered by the user.
+     */
+    public void fetchCommand(String commandKey) {
+        Runnable command = commands.get(commandKey);
         if (command != null) {
             command.run();
         } else {
-            System.out.println("Invalid command.");
-            Ui.printOptions();
+            Ui.showError("Invalid command. Please type 'help' to see the available commands and their proper formats.");
         }
     }
 
-    public static void addExpense() throws FinTrackException {
-        int dollars = readInt("Enter dollars:");
-
-        while(dollars <= 0) {
-            dollars = readInt("Please enter an amount above 0:");
-        }
-
-        int cents = readInt("Enter cents:");
-
-        while(cents <= 0 || cents >= 100) {
-            cents = readInt("Please enter an amount between 0 and 99:");
-        }
-
-        //amount computed in cents
-        int amount = dollars * 100 + cents;
-
-        Categories.printCategories();
-
-        int categoryIndex = readInt("Enter expense category:");
-        String category = Categories.getCategory(categoryIndex);
-        System.out.println("Enter expense description:");
-        String description = sc.nextLine(); // Default description
-        Date date = readDate("Enter expense date (format yyyy-MM-dd):");
-
-        Expense expense = new Expense(amount, category, description, date);
+    public void addExpense() throws FinTrackException {
+        // Use parser to read all expense details in one go.
+        Expense expense = parser.readExpenseDetails();
         int sizeBefore = expenseList.size();
         expenseList.addExpense(expense);
         if (expenseList.getMonthlyBudget() > 0) {
-            System.out.println("Your remaining budget for the month is: " + expenseList.getRemainingBudget());
+            Ui.showMessage("Your remaining budget for the month is: " + expenseList.getRemainingBudget());
         }
         assert expenseList.size() == sizeBefore + 1 : "Expense list did not increment as expected";
-        System.out.println("Expense added.");
+        Ui.showMessage("Expense added.");
         Storage.saveExpensesToFile(expenseList);
     }
 
@@ -123,153 +120,100 @@ public class Commands {
         Date now = new Date();
         SimpleDateFormat monthFormat = new SimpleDateFormat("MM-yyyy");
         String currentMonth = monthFormat.format(now);
-        System.out.println("Expenses for " + currentMonth + ":");
+        Ui.showMessage("Expenses for " + currentMonth + ":");
         for (int i = 0; i < expenseList.size(); i++) {
             Expense expense = expenseList.getExpense(i);
             if (monthFormat.format(expense.getDate()).equals(currentMonth)) {
-                System.out.println(i + ": " + expense.getDescription() +
+                Ui.showMessage(i + ": " + expense.getDescription() +
                         " - " + expense.getAmount() + " cents");
             }
         }
     }
 
     private void viewHistory() {
-        System.out.println("Spending history:");
+        Ui.showMessage("Spending history:");
         for (int i = 0; i < expenseList.size(); i++) {
             Expense expense = expenseList.getExpense(i);
-            System.out.println(i + ": " + expense.getDescription() +
+            Ui.showMessage(i + ": " + expense.getDescription() +
                     " - " + expense.getAmount() + " cents on " + expense.getDate());
         }
     }
 
     private void updateExpense() throws FinTrackException {
-        int index = readInt("Enter the index of the expense to update:");
+        int index = parser.readInt("Enter the index of the expense to update:");
         if (index < 0 || index >= expenseList.size()) {
-            System.out.println("Invalid index.");
+            Ui.showError("Invalid index.");
             return;
         }
-        int amount = readInt("Enter new expense amount (in cents):");
+        int amount = parser.readInt("Enter new expense amount (in cents):");
         if (amount < 0) {
-            System.out.println("Expense amount must be non-negative.");
+            Ui.showError("Expense amount must be non-negative.");
             return;
         }
-        System.out.println("Enter new expense category:");
-        String category = sc.nextLine();
-        System.out.println("Enter new expense description:");
-        String description = sc.nextLine();
-        Date date = readDate("Enter new expense date (format yyyy-MM-dd):");
+        String category = parser.promptInput("Enter new expense category:");
+        String description = parser.promptInput("Enter new expense description:");
+        Date date = parser.readDate("Enter new expense date (format yyyy-MM-dd):");
 
         Expense newExpense = new Expense(amount, category, description, date);
         expenseList.updateExpense(index, newExpense);
-        System.out.println("Expense updated.");
+        Ui.showMessage("Expense updated.");
         Storage.saveExpensesToFile(expenseList);
     }
 
     private void deleteExpense() throws FinTrackException {
-        int index = readInt("Enter the index of the expense to delete:");
+        int index = parser.readInt("Enter the index of the expense to delete:");
         if (index < 0 || index >= expenseList.size()) {
-            System.out.println("Invalid index.");
+            Ui.showError("Invalid index.");
             return;
         }
         Expense expense = expenseList.getExpense(index);
         int sizeBefore = expenseList.size();
         expenseList.deleteExpense(expense);
         assert expenseList.size() == sizeBefore - 1 : "Expense list did not decrement as expected";
-        System.out.println("Expense deleted.");
+        Ui.showMessage("Expense deleted.");
         Storage.saveExpensesToFile(expenseList);
     }
 
     private void exit() {
         Storage.saveExpensesToFile(expenseList);
-        System.out.println("Exiting program.");
+        Ui.showMessage("Exiting program.");
         System.exit(0);
     }
 
-    // Helper method to read an integer with re-prompting on invalid input.
-    private static int readInt(String prompt) {
-        while (true) {
-            System.out.println(prompt);
-            String input = sc.nextLine();
-
-            try {
-                return Integer.parseInt(input);
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid number, please try again.");
-            }
-        }
-    }
-
-    // Helper method to read a date with re-prompting on invalid format.
-    private static Date readDate(String prompt) throws FinTrackException {
-        while (true) {
-            System.out.println(prompt);
-            String input = sc.nextLine();
-
-            try {
-                return parseDate(input);
-            } catch (FinTrackException e) {
-                System.out.println(e.getMessage());
-                // Continue looping until a valid date is provided.
-            } catch (NoSuchElementException e) {
-                System.out.println();
-            }
-        }
-    }
-
-    private static Date parseDate(String dateStr) throws FinTrackException {
-        try {
-            return new SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
-        } catch (ParseException e) {
-            throw new FinTrackException("Invalid date format. Expected yyyy-MM-dd, got: " + dateStr);
-        }
-    }
-
     private void setMonthlyBudget() throws FinTrackException {
-        int budget = readInt("Enter monthly budget:");
+        int budget = parser.readInt("Enter monthly budget:");
         if (budget < 0) {
             throw new FinTrackException("Budget must be non-negative");
         }
         expenseList.setMonthlyBudget(budget);
-        System.out.println("Monthly budget set to: " + budget);
+        Ui.showMessage("Monthly budget set to: " + budget);
     }
 
-
     private void addRecurringExpense() throws FinTrackException {
-        int amount = readInt("Enter expense amount (in cents): ");
+        int amount = parser.readInt("Enter expense amount (in cents):");
         if (amount < 0) {
             throw new FinTrackException("Expense amount must be non-negative.");
         }
-        System.out.println("Enter expense category:");
-        String category = sc.nextLine();
-        System.out.println("Enter frequency (Weekly, Monthly, Yearly):");
-        String frequency = sc.nextLine();
-        if (!frequency.equalsIgnoreCase("Weekly") && !frequency.equalsIgnoreCase("Monthly")
-                && !frequency.equalsIgnoreCase("Yearly")) {
+        String category = parser.promptInput("Enter expense category:");
+        String frequency = parser.promptInput("Enter frequency (Weekly, Monthly, Yearly):");
+        if (!frequency.equalsIgnoreCase("Weekly") &&
+                !frequency.equalsIgnoreCase("Monthly") &&
+                !frequency.equalsIgnoreCase("Yearly")) {
             throw new FinTrackException("Invalid frequency. Must be Weekly, Monthly, or Yearly.");
         }
-        System.out.println("Enter expense description:");
-        String description = sc.nextLine();
-        Date date = readDate("Enter current date (format yyyy-MM-dd):");
-        Date startDate = readDate("Enter start date (format yyyy-MM-dd):");
-
+        String description = parser.promptInput("Enter expense description:");
+        Date date = parser.readDate("Enter current date (format yyyy-MM-dd):");
+        Date startDate = parser.readDate("Enter start date (format yyyy-MM-dd):");
 
         RecurringExpense recurringExpense = new RecurringExpense(amount, category,
                 frequency, description, startDate, startDate);
         expenseList.addRecurringExpense(recurringExpense);
-        System.out.println("Recurring expense added.");
+        Ui.showMessage("Recurring expense added.");
     }
 
-    public static void resetScanner() {
-        sc = new Scanner(System.in);
-    }
-
-    public static void editCategory(){
-        System.out.println("Please the name of the new category:");
-        String newCategory = sc.nextLine();
-
+    private void editCategory() {
+        String newCategory = parser.promptInput("Please enter the name of the new category:");
         Categories.addCategory(newCategory);
-
-        System.out.println(newCategory + " has been added to the list of categories.");
+        Ui.showMessage(newCategory + " has been added to the list of categories.");
     }
-
 }
