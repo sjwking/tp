@@ -2,7 +2,6 @@ package seedu.fintrack;
 
 import java.util.ArrayList;
 import seedu.fintrack.utils.Ui;
-import seedu.fintrack.utils.Storage;
 
 public class Categories {
     private static ArrayList<String> categories = new ArrayList<>();

@@ -74,7 +74,7 @@ public class Commands {
             Ui.showMessage(Ui.blue + " - 'budget': Sets a monthly budget" + Ui.reset);
             Ui.showMessage(Ui.cyan + " - 'recurring': Adds a recurring expense into the expense list" + Ui.reset);
             Ui.showMessage(Ui.green + " - 'category add': Adds a new category into the category list" + Ui.reset);
-            Ui.showMessage(Ui.yellow + " - 'category del': Deletes a chosen category from the category list" + Ui.reset);
+            Ui.showMessage(Ui.yellow + " - 'category del': Deletes a chosen category from category list" + Ui.reset);
             Ui.showMessage(Ui.red + " - 'exit': Exits the program" + Ui.reset);
             Ui.printBorder();
         });
