@@ -55,8 +55,9 @@ public class Ui {
                 blue + "6. Set your monthly budget\n" + reset +
                 cyan + "7. Add a recurring expense\n" + reset +
                 green + "8. Create a new category\n" + reset +
-                red + "9. Exit the app\n" + reset +
-                "For more info on how to use the commands, input " + bold + "'help'" + reset + ".\n";
+                yellow + "9. Delete a category\n" + reset +
+                red + "10. Exit the app\n" + reset +
+                "For more info on how to use the commands, type " + bold + "'help'" + reset + ".\n";
         System.out.println(options + border);
     }
 

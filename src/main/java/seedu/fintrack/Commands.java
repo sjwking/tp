@@ -59,7 +59,8 @@ public class Commands {
                 Ui.showError(e.getMessage());
             }
         });
-        commands.put("category", this::editCategory);
+        commands.put("category add", this::addCategory);
+        commands.put("category del", this::deleteCategory);
         commands.put("exit", this::exit);
 
 
@@ -72,13 +73,14 @@ public class Commands {
             Ui.showMessage(Ui.red + " - 'delete': Deletes a chosen expense entry" + Ui.reset);
             Ui.showMessage(Ui.blue + " - 'budget': Sets a monthly budget" + Ui.reset);
             Ui.showMessage(Ui.cyan + " - 'recurring': Adds a recurring expense into the expense list" + Ui.reset);
-            Ui.showMessage(Ui.green + " - 'category': Adds a new category into the category list" + Ui.reset);
+            Ui.showMessage(Ui.green + " - 'category add': Adds a new category into the category list" + Ui.reset);
+            Ui.showMessage(Ui.yellow + " - 'category del': Deletes a chosen category from the category list" + Ui.reset);
             Ui.showMessage(Ui.red + " - 'exit': Exits the program" + Ui.reset);
             Ui.printBorder();
         });
 
 
-        assert commands.size() == 10 : "Commands map should contain 10 commands (including help)";
+        assert commands.size() == 11 : "Commands map should contain 11 commands (including help)";
     }
 
     /**
@@ -139,7 +141,7 @@ public class Commands {
     private void updateExpense() throws FinTrackException {
         viewHistory();
         int index = parser.readInt("Enter the index of the expense to update:");
-        if (index < 0 || index >= expenseList.size()) {
+        if (index <= 0 || index > expenseList.size()) {
             Ui.showError("Invalid index.");
             return;
         }
@@ -208,10 +210,25 @@ public class Commands {
         Ui.printBorder();
     }
 
-    private void editCategory() {
+    private void addCategory() {
         String newCategory = parser.promptInput("Please enter the name of the new category:");
         Categories.addCategory(newCategory);
         Ui.showMessage(newCategory + " has been added to the list of categories.");
+        Storage.saveCategoriesToFile();
+        Ui.printBorder();
+    }
+
+    private void deleteCategory() {
+        Categories.printCategories();
+        int index = parser.readInt("Enter the index of the category to delete:");
+        if (index <= 0 || index > Categories.size()) {
+            Ui.showError("Invalid index.");
+            return;
+        }
+        String deletedCategory = Categories.getCategory(index);
+        Categories.removeCategory(index);
+        Ui.showMessage(deletedCategory + " has been deleted.");
+        Storage.saveCategoriesToFile();
         Ui.printBorder();
     }
 }
