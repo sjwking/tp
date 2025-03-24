@@ -16,10 +16,4 @@ Hey! Here's what I can help you with
 [0mFor more info on how to use the commands, type [1m'help'[0m.
 ________________________________________________________________________________
 ________________________________________________________________________________
-[1mEnter expense details in as follows:[0m
-<dollars>, <cents>, <category index>, <description>, <date (yyyy-MM-dd)>
-
-[1mCategories:[0m
-________________________________________________________________________________
 Exiting program.
-
